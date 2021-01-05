@@ -32,3 +32,18 @@ func TestGenerateRows(t *testing.T) {
 		}
 	})
 }
+
+func TestSetSpaces(t *testing.T) {
+	t.Run("when the input is an unit", func(t *testing.T) {
+		index := 1
+		value := "1"
+		result := SetSpaces(index, value)
+		assert.Equal(t, result, "1  ")
+	})
+	t.Run("When the input is not an unit", func(t *testing.T) {
+		index := 10
+		value := "10"
+		result := SetSpaces(index, value)
+		assert.Equal(t, result, "10 ")
+	})
+}
