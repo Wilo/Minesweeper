@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"os"
 	"os/exec"
+	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -145,9 +146,48 @@ func DrawBoard(row int, column int, board [][]string) {
 	}
 }
 
+func index(target string, array []string) (index int) {
+	for index, value := range array {
+		if value == target {
+			return index
+		}
+	}
+	return
+}
+
+func GetCoordinates(size int, coordinates string) (col int, row int, err error) {
+	re, err := regexp.Compile("([A-Z]+)([0-9]+)")
+	if err != nil {
+		return
+	}
+	letters, _ := GenerateRows(size)
+	found := re.MatchString(coordinates)
+	if found {
+		yxArray := re.FindStringSubmatch(coordinates)[1:]
+		y, x := yxArray[0], yxArray[1]
+		col, _ := strconv.Atoi(x)
+		row = index(y, letters)
+		return row, col, nil
+	}
+	return
+}
+
+func PutMines(size int, board [][]string, mines int, minesList []string) [][]string {
+	for _, coordinate := range minesList {
+		col, row, _ := GetCoordinates(size, coordinate)
+		if board[col][row] != "*  " {
+			board[col][row] = "*  "
+		}
+	}
+	return board
+}
+
 func main() {
-	//row, column := 8, 8
-	//board := MakeBoard(row, column, ".")
+	row, column := 5, 5
+	board := MakeBoard(row, column, ".")
 	//DrawBoard(row, column, board)
-	fmt.Println(MapOfMines(10, 10))
+	//fmt.Println(MapOfMines(10, 10))
+	fmt.Println(GetCoordinates(10, "A1"))
+	var mines_list []string = []string{"D0", "B4"}
+	fmt.Println(PutMines(10, board, 2, mines_list))
 }
