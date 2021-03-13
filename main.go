@@ -182,12 +182,37 @@ func PutMines(size int, board [][]string, mines int, minesList []string) [][]str
 	return board
 }
 
+func PutSignals(row int, column int, board [][]string) [][]string {
+	var map_coordinates []int = []int{-1, 0, 1}
+	for y := 0; y < column; y++ {
+		for x := 0; x < row; x++ {
+			if board[y][x] == "*  " {
+				for _, i := range map_coordinates {
+					for _, j := range map_coordinates {
+						if 0 <= y+i && y+i <= row-1 && 0 <= x+j && x+j <= column-1 && board[y+i][x+j] != "*  " {
+							index, _ := strconv.Atoi(board[y+i][x+j])
+							tmpvalue, _ := strconv.Atoi(board[y+i][x+j])
+							value := strconv.Itoa(tmpvalue + 1)
+							board[y+i][x+j] = SetSpaces(index+1, value)
+						}
+						//fmt.Println(board[y+i][x+j])
+						//fmt.Println(y, i, x, j)
+					}
+				}
+			}
+		}
+	}
+	return board
+}
+
 func main() {
 	row, column := 5, 5
-	board := MakeBoard(row, column, ".")
+	//board := MakeBoard(row, column, ".")
+	board := MakeBoard(row, column, "0")
 	//DrawBoard(row, column, board)
 	//fmt.Println(MapOfMines(10, 10))
-	fmt.Println(GetCoordinates(10, "A1"))
-	var mines_list []string = []string{"D0", "B4"}
+	//fmt.Println(GetCoordinates(10, "A1"))
+	var mines_list []string = []string{"B3", "D4"}
 	fmt.Println(PutMines(10, board, 2, mines_list))
+	fmt.Println(PutSignals(row, column, board))
 }
