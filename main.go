@@ -186,19 +186,19 @@ func PutSignals(row int, column int, board [][]string) [][]string {
 	var map_coordinates []int = []int{-1, 0, 1}
 	for y := 0; y < column; y++ {
 		for x := 0; x < row; x++ {
-			if board[y][x] == "*  " {
+			if board[y][x] != "*  " {
+				counter := 0
 				for _, i := range map_coordinates {
 					for _, j := range map_coordinates {
-						if 0 <= y+i && y+i <= row-1 && 0 <= x+j && x+j <= column-1 && board[y+i][x+j] != "*  " {
-							index, _ := strconv.Atoi(board[y+i][x+j])
-							tmpvalue, _ := strconv.Atoi(board[y+i][x+j])
-							value := strconv.Itoa(tmpvalue + 1)
-							board[y+i][x+j] = SetSpaces(index+1, value)
+						if 0 <= y+i && y+i <= row-1 && 0 <= x+j && x+j <= column-1 && board[y+i][x+j] == "*  " {
+							counter++
+
 						}
-						//fmt.Println(board[y+i][x+j])
-						//fmt.Println(y, i, x, j)
 					}
 				}
+				index, _ := strconv.Atoi(board[y][x])
+				value := strconv.Itoa(counter)
+				board[y][x] = SetSpaces(index+1, value)
 			}
 		}
 	}
