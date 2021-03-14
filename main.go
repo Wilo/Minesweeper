@@ -142,7 +142,7 @@ func DrawBoard(row int, column int, board [][]string) {
 	columns, _ := GenerateColumns(column)
 	fmt.Println(strings.Join(columns, ""))
 	for index, rowBoard := range board {
-		fmt.Println(fmt.Sprintf("%s  %s", rows[index], strings.Join(rowBoard, "")))
+		fmt.Printf("%s  %s\n", rows[index], strings.Join(rowBoard, ""))
 	}
 }
 
