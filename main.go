@@ -36,7 +36,7 @@ func SetSpaces(index int, value string) string {
 // []
 func GenerateRows(size int) (rows []string, err error) {
 	if size < 1 || size > 26 {
-		return nil, errors.New("Only numbers between 1 and 26!")
+		return nil, errors.New("only numbers between 1 and 26")
 	}
 	for row := 0; row < size; row++ {
 		rows = append(rows, string(rune('A'+row)))
@@ -46,7 +46,7 @@ func GenerateRows(size int) (rows []string, err error) {
 
 func GenerateColumns(size int) (columns []string, err error) {
 	if size < 1 || size > 26 {
-		return nil, errors.New("Only numbers between 1 and 26!")
+		return nil, errors.New("only numbers between 1 and 26")
 	}
 	columns = append(columns, "   ")
 	for column := 0; column < size; column++ {
